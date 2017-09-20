@@ -1,11 +1,14 @@
 /*
  * This list has all of the card's names.
  */
-var cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube',
- 					'leaf', 'bicycle', 'bomb'];
-var scorePanel = $('.score-panel')
-var deck       = $('.deck')
-var moves	   = $('.moves');
+var cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf',
+				  'bicycle', 'bomb','diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube',
+ 				  'leaf', 'bicycle', 'bomb'],
+	scorePanel = $('.score-panel'),
+	deck       = $('.deck'),
+	card       = $('.card'),
+	cardSymbol = card.children(),
+	moves	   = $('.moves');
 
 /*
  * Display the cards on the page
@@ -32,7 +35,12 @@ function shuffle(array) {
 
 // This is the game board
 function startGame() {
-	var shuffledCards = shuffle(cardNames);
+	shuffle(cardNames);
+	cardSymbol.removeClass();
+	cardSymbol.each(function(index) {
+		$( this ).addClass('fa fa-' + cardNames[index]);
+		index++;
+	});
 	moves.text('0');
 }
 
