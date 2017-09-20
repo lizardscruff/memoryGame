@@ -1,7 +1,5 @@
 # Memory Game Project
 
--Final Project for the IPND: FEND Concentration
-
 ## Table of Contents
 
 * [Instructions](#instructions)
