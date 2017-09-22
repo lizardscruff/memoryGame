@@ -49,32 +49,46 @@ function startGame() {
 			openCards.push(flipped.children().attr('class'));
 			// Stops the event.
 			card.off('click');
+			console.log('flippedOnce')
 			console.log(openCards);
+			cardFlipper();
 		});
 	}
 
 	// This compares the two clicked cards to see if they are the same and returns boolean.
 	function compareCards(array) {
-		if (openCards[0] === opencards[1]) {
+		if (openCards[0] === openCards[1]) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	// This function will lock the matches.
+	function lockMatch() {
+		// code
+	}
+
+	// This flips the two unmatched cards back over. UNTESTED
+	function flipBackOver(array) {
+		deck.children().removeClass('open show');
+		array = [];
+		return array;
+	}
+
 	// Flips the card from face-down to face-up.
 	function cardFlipper() {
-		if (openCards.length === 1) {
+		if (openCards.length < 1) {
+			flipOnce();
+		} else {
 			flipOnce();
 			var compared = compareCards(openCards);
 			console.log(compared);
-		} else if (openCards.length === 0) {
-			flipOnce();
-			console.log("I'm an endless loop! Yay!")
-			cardFlipper();
-		} else {
-			console.log('Else activated. Why?');
-			return;
+			if (compared === true) {
+				lockMatch();
+			} else {
+				flipBackOver(openCards);
+			}
 		}
 	}
 	cardFlipper();	
@@ -102,6 +116,18 @@ startGame();
 card.click(function() {
 	$( this ).addClass('open show');
 });
+
+	// FLips forever.
+	function flipForever() {
+		card.click(function() {
+			var flippy = $( this ).addClass('open show');
+			openCards.push(flippy.children().attr('class'));
+			console.log(openCards);
+			console.log('flippin forever!')
+		});
+	}
+
+
 */
 
 // Stuff that doesn't work:
