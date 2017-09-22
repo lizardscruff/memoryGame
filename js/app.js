@@ -9,6 +9,7 @@ var cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf',
 	card       = $('.card'),
 	cardSymbol = card.children(),
 	moves	   = $('.moves');
+	
 
 /*
  * Display the cards on the page
@@ -35,7 +36,10 @@ function shuffle(array) {
 
 // This is the game board
 function startGame() {
+	// This holds opened cards that are ready to be 
+	// checked against the next clicked card.
 	var openCards = [];
+
 	// This randomizes the face-down cards.
 	shuffle(cardNames);
 	cardSymbol.removeClass();
@@ -44,39 +48,44 @@ function startGame() {
 		index++;
 	});
 
-	/*
-	function compareCards() {
-		if (flipped === openCards[0])
-
-	}
-	*/
-
 	// Flips the card from face-down to face-up.
-	function cardFlipper() {
-		card.click(function() {
-			var flipped = 
-			$( this ).addClass('open show');
-
-			openCards.push(flipped);
-			console.log(openCards);
-			//compareCards();
-		});
+	function cardFlipper1() {
+		if (openCards.length === 0 || openCards.length === 1) {
+			card.click(function() {
+				// Flips the card from face-down to face-up.
+				var flipped = $( this ).addClass('open show');
+				// Puts the card's symbol name into the openCards array
+				openCards.push(flipped.children().attr('class'));
+				// Stops the event.
+				card.off('click');
+				console.log(openCards);
+			});
+		} else {
+			console.log('Game Over.');
+			return;
+		}
 	}
 
-// This holds opened cards that are ready to be 
-// checked against the next clicked card.
+	
+	function cardFlipper2() {
+		console.log("Flip you.");
+		console.log(openCards);
+		return;
+	}
 
-
-/*
-	function cardInArray(array) {
-		
-
+	function compareCards(variable, array) {
+		if (flipped === array[0]) {
+			console.log('This is a test. Success!')
+		} else {
+			return array;
+		}
 		return array;
 	}
-*/
-	cardFlipper();
+
+	cardFlipper1();
 }
 
+startGame();
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -88,7 +97,7 @@ function startGame() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-startGame();
+
 // *** Stuff that does work: ***
 
 /*
@@ -101,6 +110,18 @@ card.click(function() {
 */
 
 // Stuff that doesn't work:
+
+/*
+	function compareCards() {
+		console.log('Shit!');
+		
+		if (flipped === openCards[0]) {
+			$( this ).removeClass('open show');
+			$( this ).addClass('match');
+		} else {
+			$( this ).removeClass('open show')
+		}
+*/
 
 /*
 var flippedClass = flipped.children().attr('class');
