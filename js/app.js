@@ -44,10 +44,12 @@ function startGame() {
 		index++;
 	});
 
+	/*
 	function compareCards() {
 		if (flipped === openCards[0])
 
 	}
+	*/
 
 	// Flips the card from face-down to face-up.
 	function cardFlipper() {
@@ -57,7 +59,7 @@ function startGame() {
 
 			openCards.push(flipped);
 			console.log(openCards);
-			compareCards();
+			//compareCards();
 		});
 	}
 
