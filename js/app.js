@@ -42,6 +42,20 @@ function startGame() {
 
 	// Flips one card and then shuts off.
 	function flipOnce() {
+		/*
+		// Pfft. Why does.click work but .on doesn't?
+		card.on('click', 'li', function() {
+			// Flips the card from face-down to face-up.
+			var flipped = $( this ).addClass('open show');
+			// Puts the card's symbol name into the openCards array.
+			openCards.push(flipped.children().attr('class'));
+			// Stops the event.
+			card.off('click');
+			console.log('flippedOnce')
+			console.log(openCards);
+		});
+		*/
+		
 		card.click(function() {
 			// Flips the card from face-down to face-up.
 			var flipped = $( this ).addClass('open show');
@@ -51,8 +65,8 @@ function startGame() {
 			card.off('click');
 			console.log('flippedOnce')
 			console.log(openCards);
-			cardFlipper();
 		});
+		
 	}
 
 	// This compares the two clicked cards to see if they are the same and returns boolean.
@@ -79,7 +93,11 @@ function startGame() {
 	// Flips the card from face-down to face-up.
 	function cardFlipper() {
 		if (openCards.length < 1) {
-			flipOnce();
+			// How do I get this to run first and then 
+			// wait till it's done before it does the next step?
+			var once = flipOnce();
+			// WHY DOES THIS RUN FIRST!?
+			console.log("this should run after the card is flipped!");
 		} else {
 			flipOnce();
 			var compared = compareCards(openCards);
