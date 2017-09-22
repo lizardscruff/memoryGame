@@ -35,13 +35,44 @@ function shuffle(array) {
 
 // This is the game board
 function startGame() {
+	var openCards = [];
+	// This randomizes the face-down cards.
 	shuffle(cardNames);
 	cardSymbol.removeClass();
 	cardSymbol.each(function(index) {
 		$( this ).addClass('fa fa-' + cardNames[index]);
 		index++;
 	});
-	moves.text('0');
+
+	function compareCards() {
+		if (flipped === openCards[0])
+
+	}
+
+	// Flips the card from face-down to face-up.
+	function cardFlipper() {
+		card.click(function() {
+			var flipped = 
+			$( this ).addClass('open show');
+
+			openCards.push(flipped);
+			console.log(openCards);
+			compareCards();
+		});
+	}
+
+// This holds opened cards that are ready to be 
+// checked against the next clicked card.
+
+
+/*
+	function cardInArray(array) {
+		
+
+		return array;
+	}
+*/
+	cardFlipper();
 }
 
 
@@ -56,3 +87,55 @@ function startGame() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 startGame();
+// *** Stuff that does work: ***
+
+/*
+.removeClass();
+.addClass('match');
+
+card.click(function() {
+	$( this ).addClass('open show');
+});
+*/
+
+// Stuff that doesn't work:
+
+/*
+var flippedClass = flipped.children().attr('class');
+*/
+
+// This switches the card to 'card open show' when clicked
+/*
+function cardFlipper() {
+	card.click(function() {
+		$( this ).***class is lowercase dink***addclass( 'open show' );
+	});
+}
+*/
+
+/*
+function cardFlipper(openCards) {
+	if (openCards.length === 0){
+		card.click(function() {
+			var flipped = $( this ).addClass( 'open show' );
+			openCards.push(flipped.children());
+			});
+		}
+	}
+*/
+
+// Each time a card is opened it goes in the openCards array.
+	/*
+	*YOU FORGOT THE VAR* openCards = [];
+	if (openCards.length() === 0) {
+		card.click(function() {
+			$( this ).add*CLASS SHOULD BE UPPERCASEclass( 'open show' )
+		});
+	} else {
+		console.log("It's full mang");
+	}
+	*/
+
+// This sets moves to 0. Currently not editable.
+// :/ Actually this doesn't even work at all.
+// moves.text('0');
