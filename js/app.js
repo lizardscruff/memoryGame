@@ -27,7 +27,7 @@ function shuffle(array) {
     return array;
 }
 
-// This is the game board
+// This is the game board.
 function startGame() {
 
 	// This array holds the first clicked card and second clicked card.
@@ -50,6 +50,8 @@ function startGame() {
 
 	// This starts listening for clicks on the deck and cards.
 	function initEventListener() {
+		//TEST
+		matches = 8;
 		// This makes sure the click listener is off for the next cycle.
 		deck.off('click');
 
@@ -63,13 +65,19 @@ function startGame() {
 			matches = 0;
 			moves = 0;
 			movesClass.text(moves);
+			goTimer(0);			
 		});
    
-    // attach a click event listener to the card elements
+    	// Attaches a click event listener to the card elements.
 		deck.on('click', '.card', function() {
+			// Counts how many moves.
 			moveCounter();
-			console.log(moves + "moves.");
 			movesClass.text(moves);
+
+			// Timer starts!
+			goTimer();
+			// Timer gets switched to NOOP(so it doesn't get reset everytime).
+			noopSwap();
 
 			// Flips the card from face-down to face-up.
 			var flipped = $( this ).addClass('open show');
@@ -95,10 +103,32 @@ function startGame() {
 
 					initEventListener();
 				} else {
-					lockMatch();				
+					lockMatch();
 				}
 			}
 		});
+	}
+
+	// This function doesn't do anything.
+	function noop() {};
+
+	// This function swaps goTimer to NOOP.
+	function noopSwap() {
+		goTimer = noop;
+	}
+
+	// The timer.
+	function goTimer() {
+		var sec = 0;
+
+    	function pad ( val ) { 
+    		return val > 9 ? val : "0" + val;
+    	}
+
+    	setInterval( function(){
+       		$("#seconds").html(pad(++sec%60));
+        	$("#minutes").html(pad(parseInt(sec/60,10)));
+    	}, 1000);
 	}
 
 	// This increases moves by 1.
@@ -113,18 +143,23 @@ function startGame() {
 			// https://www.w3schools.com/howto/howto_css_modals.asp
 			modal.style.display = 'block';
 
-			// https://stackoverflow.com/questions/9778888/uncaught-typeerror-cannot-set-property-onclick-of-null
-			window.onload = function() {
-				// When 'x' is clicked, the modal closes.
-				$('.close').on('click', function() {
-					modal.style.display = 'none';
-				});
+			// Displays time.
+			var minutes = $('#minutes').text() 
+			var seconds = $('#seconds').text()
+			$('.clearTime').text('Clear Time is: ' + minutes + ':' + seconds);
 
-				// When outside the window is clicked, the modal closes.
-				window.onclick = function(event) {
-					if (event.target == modal) {
-						modal.style.display = 'none';
-					}
+			// Displays number of moves.
+			$('.movesNumber').text('You completed the game in ' + moves + ' moves.')
+
+			// When 'x' is clicked, the modal closes.
+			$('.close').on('click', function() {
+				modal.style.display = 'none';
+			});
+
+			// When outside the window is clicked, the modal closes.
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = 'none';
 				}
 			}
 		}

@@ -60,6 +60,7 @@ h1 {
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    color: black;
 }
 
 /* The Close Button */
@@ -151,6 +152,14 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+ * Styles for the Timer
+ */
+
+#minutes {
+    margin: 0px 0px 0px 142px;
 }
 
 /* 
