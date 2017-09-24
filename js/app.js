@@ -50,8 +50,6 @@ function startGame() {
 
 	// This starts listening for clicks on the deck and cards.
 	function initEventListener() {
-		//TEST
-		matches = 8;
 		// This makes sure the click listener is off for the next cycle.
 		deck.off('click');
 
