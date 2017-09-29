@@ -38,6 +38,7 @@ function startGame() {
 		modal	   = document.getElementById('win-modal'),
 		span 	   = document.getElementById('close'),
 		timerOn    = false,
+		// This must be global for clearInterval to work.
 		goClock;
 		
 
@@ -53,11 +54,6 @@ function startGame() {
 
 	// This starts listening for clicks on the deck and cards.
 	function initEventListener() {
-		// Calls the numbers from the html to be used in the timer.
-		//var minutes = parseInt($('#minutes').text()),
-		//	seconds = parseInt($('#seconds').text());
-		//console.log(minutes);
-
 		// This makes sure the click listener is off for the next cycle.
 		deck.off('click');
 
@@ -71,10 +67,9 @@ function startGame() {
 			matches = 0;
 			moves = 0;
 			movesClass.text(moves);
-			if (timerOn === true) {
-				stopTimer();
-			}
-			//goTimer();			
+			stopTimer();
+			$( '#seconds' ).html('00');
+			$( '#minutes' ).html('00');
 		});
    
     	// Attaches a click event listener to the card elements.
@@ -87,14 +82,8 @@ function startGame() {
 			if (timerOn === false) {
 				// Timer starts!
 				goTimer();
-			} else {
-				console.log(timerOn);
+				console.log('The timer is on = ' + timerOn);
 			}
-			
-			
-			// Timer gets switched to NOOP(so it doesn't get reset everytime).
-			//noopSwap();
-			//stopTimer();
 
 			// Flips the card from face-down to face-up.
 			var flipped = $( this ).addClass('open show');
@@ -126,35 +115,29 @@ function startGame() {
 		});
 	}
 
-	// This function doesn't do anything.
-	//function noop() {};
+	// Stops the timer.
+		function stopTimer() {
+			clearInterval(goClock);
+			timerOn = false;
+		}
 
-	// This function swaps goTimer to NOOP.
-	//function noopSwap() {
-		//goTimer = noop;
-	//}
+		// The timer.
+		// Found on: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+		function goTimer() {
+			var sec = 0;
 
-	function stopTimer() {
-		clearInterval(goClock);
-	}
+    		function pad ( val ) { 
+    			return val > 9 ? val : "0" + val;
+    		}
+    		
+    		// Made sure not to put var here. If you do, it won't work. It will take it out of global.
+      		goClock = setInterval( function(){
+       			$("#seconds").html(pad(++sec%60));
+        		$("#minutes").html(pad(parseInt(sec/60,10)));
+    		}, 1000);
 
-	// The timer.
-	function goTimer() {
-		var sec = 0;
-
-    	function pad ( val ) { 
-    		return val > 9 ? val : "0" + val;
+    		timerOn = true;
     	}
-    	
-    	goClock;
-
-    	var goClock = setInterval( function(){
-       		$("#seconds").html(pad(++sec%60));
-        	$("#minutes").html(pad(parseInt(sec/60,10)));
-    	}, 1000);
-
-    	timerOn = true;
-    }
 
 	// This increases moves by 1.
 	function moveCounter() {
@@ -164,6 +147,8 @@ function startGame() {
 	// When 8 matches are made this function executes and brings up the victory modal!
 	function endGame(value) {
 		if (value === 8) {
+			stopTimer();
+
 			// Opens the modal.
 			// https://www.w3schools.com/howto/howto_css_modals.asp
 			modal.style.display = 'block';
