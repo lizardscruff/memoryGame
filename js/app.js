@@ -34,7 +34,16 @@ function startGame() {
 	// The rest of the variables are for shortcut and later functions.
 	var openCards  = [],
 		moves 	   = 0,
-		matches    = 0,
+
+
+
+
+
+
+
+
+		//TEST IN PROGRESS
+		matches    = 8,
 		modal	   = document.getElementById('win-modal'),
 		span 	   = document.getElementById('close'),
 		timerOn    = false,
@@ -154,19 +163,38 @@ function startGame() {
 			modal.style.display = 'block';
 
 			// Displays time.
-			var minutes = $('#minutes').text() 
-			var seconds = $('#seconds').text()
+			var minutes = $('#minutes').text();
+			var seconds = $('#seconds').text();
 			$('.clearTime').text('Clear Time is: ' + minutes + ':' + seconds);
 
 			// Displays number of moves.
-			$('.movesNumber').text('You completed the game in ' + moves + ' moves.')
+			$('.movesNumber').text('You completed the game in ' + moves + ' moves.');
 
-			// When 'x' is clicked, the modal closes.
+
+
+
+
+
+
+
+
+
+			// IN PROGRESS
+			// Displays star rating.
+
+			// Displays class of first i in class stars.
+			//var starRating = $('.stars').find('i').attr('class');
+
+
+			$('.starText').text("Here's your star rating: ");
+			//$('.starRatingIcons').find('li').text();
+
+			// When the 'x' is clicked, the modal closes.
 			$('.close').on('click', function() {
 				modal.style.display = 'none';
 			});
 
-			// When outside the window is clicked, the modal closes.
+			// When the outside of the window is clicked, the modal closes.
 			window.onclick = function(event) {
 				if (event.target == modal) {
 					modal.style.display = 'none';

@@ -78,6 +78,17 @@ h1 {
     cursor: pointer;
 }
 
+.modal .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.modal .stars li {
+    list-style: none;
+    display: inline-block;
+}
 
 /*
  * Styles for the deck of cards
