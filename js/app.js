@@ -34,23 +34,13 @@ function startGame() {
 	// The rest of the variables are for shortcut and later functions.
 	var openCards  = [],
 		moves 	   = 0,
-
-
-
-
-
-
-
-
-		//TEST IN PROGRESS
-		matches    = 8,
+		matches    = 0,
 		modal	   = document.getElementById('win-modal'),
 		span 	   = document.getElementById('close'),
 		timerOn    = false,
 		// This must be global for clearInterval to work.
 		goClock;
 		
-
 	// This randomizes the face-down cards.
 	shuffle(cardNames);
 	cardSymbol.removeClass();
@@ -80,6 +70,21 @@ function startGame() {
 			$( '#seconds' ).html('00');
 			$( '#minutes' ).html('00');
 		});
+
+
+
+
+
+
+
+
+		// IT INTERACTS WITH THE DOM BUT CAN'T SELECT THE RIGHT ONE.
+		// This changes the star-rating depending on how many moves have passed.
+		if (moves >= 16) {
+			$( '.starRatingIcons' ).children( '.1 fa fa-star' ).removeClass();
+			$( '.stars' ).children().children().find( 'panel1 fa fa-star' ).removeClass();
+		}
+	
    
     	// Attaches a click event listener to the card elements.
 		deck.on('click', '.card', function() {
@@ -91,7 +96,6 @@ function startGame() {
 			if (timerOn === false) {
 				// Timer starts!
 				goTimer();
-				console.log('The timer is on = ' + timerOn);
 			}
 
 			// Flips the card from face-down to face-up.
@@ -100,9 +104,9 @@ function startGame() {
 			// Adds clicked card to the array to be checked later for matches.
 			openCards.push(flipped.children());
 
+			// If there's more than one opened card then it checks if they match.
 			if (openCards.length > 1) {
 				var compare = compareCards(openCards);
-				//console.log(compare);
 				if (compare === false) {
 					for (var index = 0; index < 2; index++) {
 						$(openCards[index]).parent().addClass('animated flash').css('background', '#ff3300');				
