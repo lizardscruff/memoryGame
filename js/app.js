@@ -80,12 +80,17 @@ function startGame() {
 
 		// IT INTERACTS WITH THE DOM BUT CAN'T SELECT THE RIGHT ONE.
 		// This changes the star-rating depending on how many moves have passed.
-		if (moves >= 16) {
-			$( '.starRatingIcons' ).children( '.1 fa fa-star' ).removeClass();
-			$( '.stars' ).children().children().find( 'panel1 fa fa-star' ).removeClass();
-		}
-	
-   
+
+		$('.stars').children().each(function (index, element) {
+			if (moves === 16) {
+				$(this).removeClass();
+			} else if (moves === 24) {
+				$(this).removeClass();
+			} else if (moves === 32) {
+				$(this).removeClass();
+			}
+		});
+		   
     	// Attaches a click event listener to the card elements.
 		deck.on('click', '.card', function() {
 			
