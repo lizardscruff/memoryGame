@@ -90,6 +90,10 @@ h1 {
     display: inline-block;
 }
 
+.playAgain {
+    cursor: pointer;
+}
+
 /*
  * Styles for the deck of cards
  */

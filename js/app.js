@@ -1,3 +1,18 @@
+// BUGS
+// If card has been matched it shouldn't be able to be clicked again nor should moves increase.
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * This list has all of the card's names.
  * The rest are variables for shortcuts.
@@ -32,29 +47,26 @@ function startGame() {
 
 	// This array holds the first clicked card and second clicked card.
 	// The rest of the variables are for shortcut and later functions.
-	var openCards  = [],
-		moves 	   = 0,
-		matches    = 0,
-		modal	   = document.getElementById('win-modal'),
-		span 	   = document.getElementById('close'),
-		timerOn    = false,
+	var openCards  		= [],
+		moves 	   		= 0,
+		matches    		= 0,
+		modal	   		= document.getElementById('win-modal'),
+		span 	   		= document.getElementById('close'),
+		timerOn    		= false,
+		starsScorePanel = $('.stars'),
+		starRatings 	= [16, 24, 48],
 		// This must be global for clearInterval to work.
 		goClock;
+
+	cardShuffler();
 		
-	// This randomizes the face-down cards.
-	shuffle(cardNames);
-	cardSymbol.removeClass();
-
-	// ??? Helper said something about not needing index here? But it doesn't work without it.
-	cardSymbol.each(function(index) {
-		$( this ).addClass('fa fa-' + cardNames[index]);
-		index++;
-	});
-
 	// This starts listening for clicks on the deck and cards.
 	function initEventListener() {
 		// This makes sure the click listener is off for the next cycle.
 		deck.off('click');
+
+		// This resets the cards back to the original clickable state.
+		deck.children().prop('disabled', false);
 
 		// Check if matches have been met.
 		endGame(matches);
@@ -69,25 +81,26 @@ function startGame() {
 			stopTimer();
 			$( '#seconds' ).html('00');
 			$( '#minutes' ).html('00');
+			starsScorePanel.children().children().each(function (index, element) {
+				$(element).css('color', '');
+			});
+			$('.starRatingIcons').children().each(function(index, element) {
+				$(element).removeClass();
+				$(element).addClass('fa fa-star');
+			});
+			cardShuffler();
 		});
 
-
-
-
-
-
-
-
-		// IT INTERACTS WITH THE DOM BUT CAN'T SELECT THE RIGHT ONE.
-		// This changes the star-rating depending on how many moves have passed.
-
-		$('.stars').children().each(function (index, element) {
-			if (moves === 16) {
-				$(this).removeClass();
-			} else if (moves === 24) {
-				$(this).removeClass();
-			} else if (moves === 32) {
-				$(this).removeClass();
+		// This changes the star-rating to being greyed-out for the score panel stars and removes the class
+		// for the modal stars. Star rating is based on the moves used.
+		starsScorePanel.children().children().each(function (index, element) {
+			if (starRatings[index] === moves) {
+				$(element).css('color', 'grey');
+			}
+		});
+		$('.starRatingIcons').children().each(function(index, element) {
+			if (starRatings[index] === moves) {
+				$(element).removeClass();
 			}
 		});
 		   
@@ -102,9 +115,14 @@ function startGame() {
 				// Timer starts!
 				goTimer();
 			}
-
+			
 			// Flips the card from face-down to face-up.
 			var flipped = $( this ).addClass('open show');
+
+			// This disables a card that has been clicked from being able to be clicked again.
+			if ($(this).hasClass('open')) {
+				$(this).prop('disabled', true);
+			}
 
 			// Adds clicked card to the array to be checked later for matches.
 			openCards.push(flipped.children());
@@ -133,7 +151,7 @@ function startGame() {
 		});
 	}
 
-	// Stops the timer.
+		// Stops the timer.
 		function stopTimer() {
 			clearInterval(goClock);
 			timerOn = false;
@@ -157,6 +175,18 @@ function startGame() {
     		timerOn = true;
     	}
 
+    function cardShuffler() {
+		// This randomizes the face-down cards.
+		shuffle(cardNames);
+		cardSymbol.removeClass();
+
+		// ??? Helper said something about not needing index here? But it doesn't work without it.
+		cardSymbol.each(function(index) {
+			$( this ).addClass('fa fa-' + cardNames[index]);
+			index++;
+		});
+	}	
+
 	// This increases moves by 1.
 	function moveCounter() {
 		moves++;
@@ -174,30 +204,14 @@ function startGame() {
 			// Displays time.
 			var minutes = $('#minutes').text();
 			var seconds = $('#seconds').text();
-			$('.clearTime').text('Clear Time is: ' + minutes + ':' + seconds);
+			$('.clearTime').text('Clear Time: ' + minutes + ':' + seconds);
 
 			// Displays number of moves.
 			$('.movesNumber').text('You completed the game in ' + moves + ' moves.');
 
-
-
-
-
-
-
-
-
-
-			// IN PROGRESS
 			// Displays star rating.
-
-			// Displays class of first i in class stars.
-			//var starRating = $('.stars').find('i').attr('class');
-
-
 			$('.starText').text("Here's your star rating: ");
-			//$('.starRatingIcons').find('li').text();
-
+			
 			// When the 'x' is clicked, the modal closes.
 			$('.close').on('click', function() {
 				modal.style.display = 'none';
@@ -209,6 +223,27 @@ function startGame() {
 					modal.style.display = 'none';
 				}
 			}
+
+			// The play again option resets everything and allows a fresh new play.
+			$('.playAgain').on('click', function() {
+				card.removeClass();
+				card.addClass('card');
+				matches = 0;
+				moves = 0;
+				movesClass.text(moves);
+				stopTimer();
+				$( '#seconds' ).html('00');
+				$( '#minutes' ).html('00');
+				starsScorePanel.children().children().each(function (index, element) {
+					$(element).css('color', '');
+				});
+				$('.starRatingIcons').children().each(function(index, element) {
+					$(element).removeClass();
+					$(element).addClass('fa fa-star');
+				});
+				modal.style.display = 'none';
+				cardShuffler();
+			});
 		}
 	}
 
