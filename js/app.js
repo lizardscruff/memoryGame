@@ -1,18 +1,3 @@
-// BUGS
-// If card has been matched it shouldn't be able to be clicked again nor should moves increase.
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  * This list has all of the card's names.
  * The rest are variables for shortcuts.
@@ -44,7 +29,6 @@ function shuffle(array) {
 
 // This is the game board.
 function startGame() {
-
 	// This array holds the first clicked card and second clicked card.
 	// The rest of the variables are for shortcut and later functions.
 	var openCards  		= [],
@@ -68,6 +52,13 @@ function startGame() {
 		// This resets the cards back to the original clickable state.
 		deck.children().prop('disabled', false);
 
+		// This makes sure matched cards cannot be clicked.
+		$('li').each(function(index) {
+			if ($(this).hasClass('match')) {
+				$(this).prop('disabled', true);
+			}
+		});
+
 		// Check if matches have been met.
 		endGame(matches);
 		
@@ -89,6 +80,8 @@ function startGame() {
 				$(element).addClass('fa fa-star');
 			});
 			cardShuffler();
+			deck.children().prop('disabled', false);
+			openCards.splice(0, 2);
 		});
 
 		// This changes the star-rating to being greyed-out for the score panel stars and removes the class
@@ -243,6 +236,7 @@ function startGame() {
 				});
 				modal.style.display = 'none';
 				cardShuffler();
+				deck.children().prop('disabled', false);
 			});
 		}
 	}
