@@ -35,6 +35,10 @@ h1 {
     font-weight: 300;
 }
 
+.hand {
+    font-size: 90px;
+}
+
 /*
  * Styles for the modal
  * Credit: https://www.w3schools.com/howto/howto_css_modals.asp
@@ -45,22 +49,28 @@ h1 {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
+    right: 0;
     top: 0;
+    bottom: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: #333; /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    background-color: #262626;
+    margin: auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    color: black;
+    padding-top: 200px;
+    border: 1px solid black;
+    width: 65%; /* Could be more or less, depending on screen size */
+    height: 100%;
+    color: #ccffff;
 }
 
 /* The Close Button */
@@ -90,8 +100,50 @@ h1 {
     display: inline-block;
 }
 
-.playAgain {
+.starRatingIcons {
+    display: block;
+    padding: 5px;
+}
+
+/* Play Again Button */
+.playAgainText {
+    display: inline-block;
+    border-radius: 25px;
+    background-color: #00ff99;
+    border: none;
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding: 5px;
+    width: 135px;
+    transition: all 0.5s;
     cursor: pointer;
+    margin: 45px;
+}
+
+.playAgainText span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.playAgainText span:after {
+  content: '\003F';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+}
+
+.playAgainText:hover span {
+  padding-right: 25px;
+}
+
+.playAgainText:hover span:after {
+  opacity: 1;
+  right: 10px;
 }
 
 /*

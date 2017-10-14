@@ -218,7 +218,7 @@ function startGame() {
 			}
 
 			// The play again option resets everything and allows a fresh new play.
-			$('.playAgain').on('click', function() {
+			$('.playAgainText').on('click', function() {
 				card.removeClass();
 				card.addClass('card');
 				matches = 0;
