@@ -2,7 +2,7 @@
  * This list has all of the card's names.
  * The rest are variables for shortcuts.
  */
-var cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf',
+let cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf',
 				  'bicycle', 'bomb','diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube',
  				  'leaf', 'bicycle', 'bomb'],
 	scorePanel = $('.score-panel'),
@@ -14,7 +14,7 @@ var cardNames  = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf',
 	
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -31,7 +31,7 @@ function shuffle(array) {
 function startGame() {
 	// This array holds the first clicked card and second clicked card.
 	// The rest of the variables are for shortcut and later functions.
-	var openCards  		= [],
+	let openCards  		= [],
 		moves 	   		= 0,
 		matches    		= 0,
 		modal	   		= document.getElementById('win-modal'),
@@ -110,7 +110,7 @@ function startGame() {
 			}
 			
 			// Flips the card from face-down to face-up.
-			var flipped = $( this ).addClass('open show');
+			let flipped = $( this ).addClass('open show');
 
 			// This disables a card that has been clicked from being able to be clicked again.
 			if ($(this).hasClass('open')) {
@@ -122,9 +122,9 @@ function startGame() {
 
 			// If there's more than one opened card then it checks if they match.
 			if (openCards.length > 1) {
-				var compare = compareCards(openCards);
+				let compare = compareCards(openCards);
 				if (compare === false) {
-					for (var index = 0; index < 2; index++) {
+					for (let index = 0; index < 2; index++) {
 						$(openCards[index]).parent().addClass('animated flash').css('background', '#ff3300');				
 					}
 
@@ -153,7 +153,7 @@ function startGame() {
 		// The timer.
 		// Found on: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
 		function goTimer() {
-			var sec = 0;
+			let sec = 0;
 
     		function pad ( val ) { 
     			return val > 9 ? val : "0" + val;
@@ -195,8 +195,8 @@ function startGame() {
 			modal.style.display = 'block';
 
 			// Displays time.
-			var minutes = $('#minutes').text();
-			var seconds = $('#seconds').text();
+			let minutes = $('#minutes').text();
+			let seconds = $('#seconds').text();
 			$('.clearTime').text('Clear Time: ' + minutes + ':' + seconds);
 
 			// Displays number of moves.
@@ -243,16 +243,12 @@ function startGame() {
 
 	// This compares the two clicked cards to see if they are the same and returns a boolean.
 	function compareCards(array) {
-		if (openCards[0].attr('class') === openCards[1].attr('class')) {
-			return true;
-		} else {
-			return false;
-		}
+		return openCards[0].attr('class') === openCards[1].attr('class') ? true : false;
 	}
 
 	// This function will lock the matches.
 	function lockMatch() {
-		for (var index = 0; index < 2; index++) {
+		for (let index = 0; index < 2; index++) {
 			$(openCards[index]).parent().removeClass('open show');
 			$(openCards[index]).parent().addClass('match');
 			$(openCards[index]).parent().addClass('animated tada');
