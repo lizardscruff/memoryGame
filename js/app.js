@@ -38,7 +38,7 @@ function startGame() {
 		span 	   		= document.getElementById('close'),
 		timerOn    		= false,
 		starsScorePanel = $('.stars'),
-		starRatings 	= [16, 24, 48],
+		starRatings 	= [16, 32],
 		// This must be global for clearInterval to work.
 		goClock;
 
